@@ -43,6 +43,7 @@ void insert(node **phead, node *newnode)
 			phead->next = newnode;
 		}
 		phead = phead->next;
+	}
 }
 
 //create a new node structure
