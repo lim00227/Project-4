@@ -17,4 +17,5 @@ void insert(node **, node *);
 node* create_node(int, char *);
 
 extern node *head;
+extern int seq_ctr; // added line
 #endif
