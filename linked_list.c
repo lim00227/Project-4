@@ -3,34 +3,44 @@
 #include <string.h>
 #include "pthread.h"
 #include "linked_list.h"
-char buffer[256];
+
 // initialize head
 node *head = NULL;
 
 // sequence counter
 int seq_ctr = 0;
-// current node
+/* // current node
 node *cur = NULL;
 // line counter
-line_ctr = 0;
+int line_ctr = 0; */
 //Read the file on a line by line basis
 char* read_line(char* fname, int line_no) 
 {
 	FILE *fp = fopen(fname, "r");
-	while(fgets(buffer, sizeof(buffer), fp) != NULL) {
-		if (line_ctr == line_no) {
-			return buffer;
+	if (!fp) {
+		return NULL;
+	}
+	char buffer[LINE_SIZE];
+	int current = 0;
+
+	while(fgets(buffer, LINE_SIZE, fp)) {
+		if (current == line_no) {
+			fclose(fp);
+			char *line = malloc(strlen(buffer) + 1);
+			strcpy(line, buffer);
+			return line;
 		}
-		line_ctr++;
+		current++;
 	}
 	fclose(fp);
+	return NULL;
 } 
 
 //traverse the linked list
 void traversal(node *head)
 {
 	while(head != NULL) {
-		fprintf("%d, %d, %d", seq_no, line_no, content);
+		fprintf("%d, %d, %d", head->seq_no, head->line_no, head->content);
 		head = head->next;
 	}
 }
@@ -49,8 +59,10 @@ void insert(node **phead, node *newnode)
 //create a new node structure
 node* create_node(int line_no, char *line)
 {
-	node new;
-	new->line_no = line_no;
-	new->content = line;
-	new->seq_no = seq_ctr;
+	node *newnode = malloc(sizeof(node));
+	newnode->line_no = line_no;
+	newnode->content = line;
+	newnode->next = NULL;
+	newnode->seq_no = -1;
+	return newnode;
 }
