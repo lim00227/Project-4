@@ -40,7 +40,7 @@ char* read_line(char* fname, int line_no)
 void traversal(node *head)
 {
 	while(head != NULL) {
-		fprintf("%d, %d, %d", head->seq_no, head->line_no, head->content);
+		printf("%d, %d, %s", head->seq_no, head->line_no, head->content);
 		head = head->next;
 	}
 }
@@ -48,12 +48,27 @@ void traversal(node *head)
 // insert the node into the linked list
 void insert(node **phead, node *newnode)
 {
+	if (*phead == NULL || newnode->line_no < (*phead)->line_no) {
+		newnode->next = *phead;
+		*phead = newnode;
+		return;
+	}
+	
+	node *curr = *phead;
+	while (curr->next && curr->next->line_no < newnode->line_no) {
+		curr = curr->next;
+	}
+
+	newnode->next = curr->next;
+	curr->next = newnode;
+	
+	/* old code
 	while(phead != NULL) {
 		if(phead->next == NULL) {
 			phead->next = newnode;
 		}
 		phead = phead->next;
-	}
+	} */
 }
 
 //create a new node structure
