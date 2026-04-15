@@ -11,15 +11,17 @@ node *head = NULL;
 int seq_ctr = 0;
 // current node
 node *cur = NULL;
+// line counter
+line_ctr = 0;
 //Read the file on a line by line basis
 char* read_line(char* fname, int line_no) 
 {
 	FILE *fp = fopen(fname, "r");
 	while(fgets(buffer, sizeof(buffer), fp) != NULL) {
-		if (seq_ctr == line_no) {
+		if (line_ctr == line_no) {
 			return buffer;
 		}
-		seq_ctr++;
+		line_ctr++;
 	}
 	fclose(fp);
 } 
@@ -27,13 +29,16 @@ char* read_line(char* fname, int line_no)
 //traverse the linked list
 void traversal(node *head)
 {
-
+	while(head != NULL) {
+		fprint("%d, %d, %d", seq_no, line_no, content);
+		head = head->next;
+	}
 }
 
 // insert the node into the linked list
 void insert(node **phead, node *newnode)
 {
-	// TODO
+	
 }
 
 //create a new node structure
